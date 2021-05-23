@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Lab15.ru | Блог
+{% endblock %}
+
+{% block body %}
+
+<!-- Posts -->
+<div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
+    <h4 class="border-bottom border-gray pb-2 mb-0">Последние посты</h4>
+    {% for el in pages.items %}
+    <div class="media text-muted pt-3">
+        <figure>
+            <img src= "{{ el.icon }}" width="64" height="64">
+            <div class="small text-muted" align="center"><figcaption>{{ el.date.strftime('%d-%m-%y') }}</figcaption></div>
+        </figure>
+        <p class="media-body pb-3 pl-3 mb-0 Medium lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">{{ el.title }}</strong>
+            {{ el.intro }} <a href="/blog/{{ el.id }}">Читать дальше...</a>
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+    <!-- Page navigation -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not pages.has_prev %} disabled {% endif%}">
+                <a class="page-link" href="./blog?page={{ pages.prev_num }}" tabindex="-1" aria-disabled="true">Назад</a>
+            </li>
+            {% for page in pages.iter_pages() %}
+            <li class="page-item {% if page == pages.page %} active {% endif %}">
+                <a class="page-link" href="./blog?page={{ page }}"> {{ page }}</a>
+            </li>
+            {% endfor %}
+            <li class="page-item {% if not pages.has_next %} disabled {% endif%}">
+                <a class="page-link" href="./blog?page={{ pages.next_num }}">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}

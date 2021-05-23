@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Lab15.ru | Блог > {{ post.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
+    <h1>{{ post.title }}</h1>
+    <div class="medium text-muted alert alert-secondary" role="alert">
+        <figcaption>Дата публикации: {{ post.date.strftime('%d-%m-%y') }}</figcaption>
+    </div>
+    <div class="alert alert-light">
+        <p>{{ post.text|safe }}</p>
+        {% if current_user.has_role('Admin') %}
+        <a href="/blog/{{ post.id }}/del" class="btn btn-danger">Удалить</a>
+        <a href="/blog/{{ post.id }}/update" class="btn btn-success">Редактировать</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

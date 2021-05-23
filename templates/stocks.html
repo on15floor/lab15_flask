@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Lab15.ru | Акции
+{% endblock %}
+
+{% block body %}
+
+<!-- Posts -->
+<div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
+    <h4 class="border-bottom border-gray pb-2 mb-0">Акции</h4>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Статистика
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">USD</th>
+                            <th scope="col">RUB</th>
+                            <th scope="col">Сумма(RUB)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-info">
+                            <td><strong>Пополнения</strong></td>
+                            <td>{{ stats_br['pay_in_usd'] + stats_iis['pay_in_usd'] }}</td>
+                            <td>{{ stats_br['pay_in_rub'] + stats_iis['pay_in_rub'] }}</td>
+                            <td>{{ stats_br['pay_in_sum'] + stats_iis['pay_in_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > Брокерский счет</td>
+                            <td>{{ stats_br['pay_in_usd'] }}</td>
+                            <td>{{ stats_br['pay_in_rub'] }}</td>
+                            <td>{{ stats_br['pay_in_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > ИИС</td>
+                            <td>{{ stats_iis['pay_in_usd'] }}</td>
+                            <td>{{ stats_iis['pay_in_rub'] }}</td>
+                            <td>{{ stats_iis['pay_in_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td><strong>Вывод</strong></td>
+                            <td>{{ stats_br['pay_out_usd'] + stats_iis['pay_out_usd'] }}</td>
+                            <td>{{ stats_br['pay_out_rub'] + stats_iis['pay_out_rub'] }}</td>
+                            <td>{{ stats_br['pay_out_sum'] + stats_iis['pay_out_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > Брокерский счет</td>
+                            <td>{{ stats_br['pay_out_usd'] }}</td>
+                            <td>{{ stats_br['pay_out_rub'] }}</td>
+                            <td>{{ stats_br['pay_out_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > ИИС</td>
+                            <td>{{ stats_iis['pay_out_usd'] }}</td>
+                            <td>{{ stats_iis['pay_out_rub'] }}</td>
+                            <td>{{ stats_iis['pay_out_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td><strong>Дивиденды</strong></td>
+                            <td>{{ stats_br['dividend_usd'] + stats_iis['dividend_usd'] }}</td>
+                            <td>{{ stats_br['dividend_rub'] + stats_iis['dividend_rub'] }}</td>
+                            <td>{{ stats_br['dividend_sum'] + stats_iis['dividend_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > Брокерский счет</td>
+                            <td>{{ stats_br['dividend_usd'] }}</td>
+                            <td>{{ stats_br['dividend_rub'] }}</td>
+                            <td>{{ stats_br['dividend_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > ИИС</td>
+                            <td>{{ stats_iis['dividend_usd'] }}</td>
+                            <td>{{ stats_iis['dividend_rub'] }}</td>
+                            <td>{{ stats_iis['dividend_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td><strong>Свободные</strong></td>
+                            <td>{{ stats_br['free_usd'] + stats_iis['free_usd'] }}</td>
+                            <td>{{ stats_br['free_rub'] + stats_iis['free_rub'] }}</td>
+                            <td>{{ stats_br['free_sum'] + stats_iis['free_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > Брокерский счет</td>
+                            <td>{{ stats_br['free_usd'] }}</td>
+                            <td>{{ stats_br['free_rub'] }}</td>
+                            <td>{{ stats_br['free_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > ИИС</td>
+                            <td>{{ stats_iis['free_usd'] }}</td>
+                            <td>{{ stats_iis['free_rub'] }}</td>
+                            <td>{{ stats_iis['free_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td><strong>Акции</strong></td>
+                            <td>{{ stats_br['stocks_usd'] + stats_iis['stocks_usd'] }}</td>
+                            <td>{{ stats_br['stocks_rub'] + stats_iis['stocks_rub'] }}</td>
+                            <td>{{ stats_br['stocks_sum'] + stats_iis['stocks_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > Брокерский счет</td>
+                            <td>{{ stats_br['stocks_usd'] }}</td>
+                            <td>{{ stats_br['stocks_rub'] }}</td>
+                            <td>{{ stats_br['stocks_sum'] }}</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td> > ИИС</td>
+                            <td>{{ stats_iis['stocks_usd'] }}</td>
+                            <td>{{ stats_iis['stocks_rub'] }}</td>
+                            <td>{{ stats_iis['stocks_sum'] }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Брокерский счет
+                        {% if stats_br['profit'] >=0 %}
+                        <font color="#5FB404">(+ {{ stats_br['profit'] }})</font>
+                        {% else %}
+                        <font color="#FA5858">(- {{ stats_br['profit'] }})</font>
+                        {% endif %}
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" width="5%">Ticker</th>
+                            <th scope="col" width="45%">Company</th>
+                            <th scope="col" width="5%">Balance</th>
+                            <th scope="col" width="5%">Currency</th>
+                            <th scope="col" width="10%">Price AVG</th>
+                            <th scope="col" width="10%">Price NOW</th>
+                            <th scope="col" width="10%">Total</th>
+                            <th scope="col" width="10%">Profit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in stocks_br %}
+                        <tr class="">
+                            <td>{{ el[0] }}</td>
+                            <td>{{ el[1] }}</td>
+                            <td>{{ el[2] }}</td>
+                            <td>{{ el[3] }}</td>
+                            <td>{{ el[4] }}</td>
+                            <td>{{ el[5] }}</td>
+                            <td>{{ el[6] }}</td>
+                            {% if el[7] >=0 %}
+                            <td class="bg-success">{{ el[7] }}</td>
+                            {% else %}
+                            <td class="bg-danger">{{ el[7] }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Индивидуальный инвестиционный счет
+                        {% if stats_iis['profit'] >=0 %}
+                        <font color="#5FB404">(+ {{ stats_iis['profit'] }})</font>
+                        {% else %}
+                        <font color="#FA5858">({{ stats_iis['profit'] }})</font>
+                        {% endif %}
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" width="5%">Ticker</th>
+                            <th scope="col" width="45%">Company</th>
+                            <th scope="col" width="5%">Balance</th>
+                            <th scope="col" width="5%">Currency</th>
+                            <th scope="col" width="10%">Price AVG</th>
+                            <th scope="col" width="10%">Price NOW</th>
+                            <th scope="col" width="10%">Total</th>
+                            <th scope="col" width="10%">Profit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in stocks_iis %}
+                        <tr class="">
+                            <td>{{ el[0] }}</td>
+                            <td>{{ el[1] }}</td>
+                            <td>{{ el[2] }}</td>
+                            <td>{{ el[3] }}</td>
+                            <td>{{ el[4] }}</td>
+                            <td>{{ el[5] }}</td>
+                            <td>{{ el[6] }}</td>
+                            {% if el[7] >=0 %}
+                            <td class="bg-success">{{ el[7] }}</td>
+                            {% else %}
+                            <td class="bg-danger">{{ el[7] }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
