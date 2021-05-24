@@ -135,6 +135,7 @@ def unity_privacy_policy(game):
 
 
 @app.route('/stocks')
+@login_required
 def stocks():
     """ Страница. Ценные бумаги """
     stats_br, stocks_br = build_collection('2001148671')

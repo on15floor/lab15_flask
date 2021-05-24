@@ -135,9 +135,9 @@ Lab15.ru | Акции
                             data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Брокерский счет
                         {% if stats_br['profit'] >=0 %}
-                        <font color="#5FB404">(+ {{ stats_br['profit'] }})</font>
+                        <font color="#5FB404">[+ {{ stats_br['profit'] }} руб.]</font>
                         {% else %}
-                        <font color="#FA5858">(- {{ stats_br['profit'] }})</font>
+                        <font color="#FA5858">[- {{ stats_br['profit'] }} руб.]</font>
                         {% endif %}
                     </button>
                 </h2>
@@ -150,20 +150,20 @@ Lab15.ru | Акции
                             <th scope="col" width="5%">Ticker</th>
                             <th scope="col" width="45%">Company</th>
                             <th scope="col" width="5%">Balance</th>
-                            <th scope="col" width="5%">Currency</th>
                             <th scope="col" width="10%">Price AVG</th>
                             <th scope="col" width="10%">Price NOW</th>
                             <th scope="col" width="10%">Total</th>
                             <th scope="col" width="10%">Profit</th>
+                            <th scope="col" width="5%">Currency</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for el in stocks_br %}
                         <tr class="">
-                            <td>{{ el[0] }}</td>
+                            <td><a href="https://www.tinkoff.ru/invest/stocks/{{ el[0] }}/" target="_blank">{{ el[0]
+                                }}</a></td>
                             <td>{{ el[1] }}</td>
                             <td>{{ el[2] }}</td>
-                            <td>{{ el[3] }}</td>
                             <td>{{ el[4] }}</td>
                             <td>{{ el[5] }}</td>
                             <td>{{ el[6] }}</td>
@@ -172,6 +172,7 @@ Lab15.ru | Акции
                             {% else %}
                             <td class="bg-danger">{{ el[7] }}</td>
                             {% endif %}
+                            <td>{{ el[3] }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -179,6 +180,7 @@ Lab15.ru | Акции
                 </div>
             </div>
         </div>
+
         <div class="card">
             <div class="card-header" id="headingThree">
                 <h2 class="mb-0">
@@ -186,9 +188,9 @@ Lab15.ru | Акции
                             data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         Индивидуальный инвестиционный счет
                         {% if stats_iis['profit'] >=0 %}
-                        <font color="#5FB404">(+ {{ stats_iis['profit'] }})</font>
+                        <font color="#5FB404">[+ {{ stats_iis['profit'] }} руб.]</font>
                         {% else %}
-                        <font color="#FA5858">({{ stats_iis['profit'] }})</font>
+                        <font color="#FA5858">[{{ stats_iis['profit'] }} руб.]</font>
                         {% endif %}
                     </button>
                 </h2>
@@ -201,20 +203,20 @@ Lab15.ru | Акции
                             <th scope="col" width="5%">Ticker</th>
                             <th scope="col" width="45%">Company</th>
                             <th scope="col" width="5%">Balance</th>
-                            <th scope="col" width="5%">Currency</th>
                             <th scope="col" width="10%">Price AVG</th>
                             <th scope="col" width="10%">Price NOW</th>
                             <th scope="col" width="10%">Total</th>
                             <th scope="col" width="10%">Profit</th>
+                            <th scope="col" width="5%">Currency</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for el in stocks_iis %}
                         <tr class="">
-                            <td>{{ el[0] }}</td>
+                            <td><a href="https://www.tinkoff.ru/invest/stocks/{{ el[0] }}/" target="_blank">{{ el[0]
+                                }}</a></td>
                             <td>{{ el[1] }}</td>
                             <td>{{ el[2] }}</td>
-                            <td>{{ el[3] }}</td>
                             <td>{{ el[4] }}</td>
                             <td>{{ el[5] }}</td>
                             <td>{{ el[6] }}</td>
@@ -223,6 +225,7 @@ Lab15.ru | Акции
                             {% else %}
                             <td class="bg-danger">{{ el[7] }}</td>
                             {% endif %}
+                            <td>{{ el[3] }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
