@@ -88,9 +88,9 @@ Lab15.ru | Акции
                         </tr>
                         <tr class="bg-info">
                             <td><strong>Свободные</strong></td>
-                            <td>{{ stats_br['free_usd'] + stats_iis['free_usd'] }}</td>
-                            <td>{{ stats_br['free_rub'] + stats_iis['free_rub'] }}</td>
-                            <td>{{ stats_br['free_sum'] + stats_iis['free_sum'] }}</td>
+                            <td>{{ (stats_br['free_usd'] + stats_iis['free_usd'])|round(2) }}</td>
+                            <td>{{ (stats_br['free_rub'] + stats_iis['free_rub'])|round(2) }}</td>
+                            <td>{{ (stats_br['free_sum'] + stats_iis['free_sum'])|round(2) }}</td>
                         </tr>
                         <tr class="bg-light">
                             <td> > Брокерский счет</td>
@@ -226,6 +226,52 @@ Lab15.ru | Акции
                             <td class="bg-danger">{{ el[7] }}</td>
                             {% endif %}
                             <td>{{ el[3] }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFore">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseFore" aria-expanded="false" aria-controls="collapseFore">
+                        Обмен валют (RUB-> USD)
+                        {% if operations_usd_profit >=0 %}
+                        <font color="#5FB404">[+ operations_usd_profit }} руб.]</font>
+                        {% else %}
+                        <font color="#FA5858">[{{ operations_usd_profit }} руб.]</font>
+                        {% endif %}
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFore" class="collapse" aria-labelledby="headingFore" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Summa</th>
+                            <th scope="col">Profit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in operations_usd %}
+                        <tr class="">
+                            <td>{{ el['date'] }}</td>
+                            <td>{{ el['amount'] }}</td>
+                            <td>{{ el['price']|round(2) }}</td>
+                            <td>{{ el['total']|round(2) }}</td>
+                            {% if el['profit'] >=0 %}
+                            <td class="bg-success">{{ el['profit'] }}</td>
+                            {% else %}
+                            <td class="bg-danger">{{ el['profit'] }}</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                         </tbody>

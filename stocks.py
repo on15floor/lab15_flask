@@ -17,11 +17,13 @@ class TinkoffAPI:
     def __init__(self, api_secret: str, broker_account_id: str):
         self._client = tinvest.SyncClient(api_secret)
         self._broker_account_id = broker_account_id
+        """Получаем курс доллара"""
+        response = self._client.get_market_orderbook(figi="BBG0013HGFT4", depth=1)
+        self.usd_currency = float(response.payload.last_price)
 
     def get_portfolio_positions(self):
-        """Получаем порфтель вида |Тикер|Имя|Валюта|Средняя цена|Кол-во|Возможная прибыль|,
-        А также возвращаем курс доллара и незадействованные доллары в портфеле"""
-        portfolio = {'stocks': [], 'usd_rub_currency': 0.00, 'free_usd': 0.00}
+        """Получаем порфтель вида: |Тикер|Имя|Валюта|Средняя цена|Кол-во|Возможная прибыль"""
+        portfolio = {'stocks': [], 'free_usd': 0.00}
         response = self._client.get_portfolio(broker_account_id=self._broker_account_id)
         for position in response.payload.positions:
             ticker = position.ticker
@@ -33,11 +35,10 @@ class TinkoffAPI:
             price_now = round((balance * price_avg + profit) / balance, 2)
             total = round(balance * price_now, 2)
             if ticker == 'USD000UTSTOM':
-                portfolio['usd_rub_currency'] = price_now
                 portfolio['free_usd'] = balance
             else:
                 portfolio['stocks'].append([ticker, company, int(balance), currency, price_avg, price_now, total,
-                                               profit])
+                                            profit])
         return portfolio
 
     def get_portfolio_positions_rub(self):
@@ -51,6 +52,8 @@ class TinkoffAPI:
         """Возвращает операции в портфеле с указанной даты"""
         operations = {'dividend_usd': 0.00, 'dividend_rub': 0.00, 'pay_in_usd': 0.00, 'pay_in_rub': 0.00,
                       'pay_out_usd': 0.00, 'pay_out_rub': 0.00}
+        operations_usd = []  # Операции по обмену рублей на доллары
+        total_profit_usd = 0.00
 
         from_ = localize(broker_account_started_at)
         now = get_now()
@@ -71,16 +74,26 @@ class TinkoffAPI:
                     operations['pay_out_usd'] = operations.get('pay_out_usd') + float(position.payment)
                 elif position.currency.value == 'RUB':
                     operations['pay_out_rub'] = operations.get('pay_out_rub') + float(position.payment)
-        return operations
+            elif position.figi == 'BBG0013HGFT4' and position.operation_type.value == 'Buy':
+                date = position.date
+                amount = position.quantity
+                price = float(position.price)
+                total = amount * price
+                profit = amount * self.usd_currency - total
+                total_profit_usd += profit
+                operations_usd.append({'date': date, 'amount': amount, 'price': price,
+                                       'total': total, 'profit': round(profit, 2)})
+        operations_usd.append(total_profit_usd)
+        return operations, operations_usd
 
 
 def build_collection(broker_account_id: str):
     """Собираем порфтель и статистику в коллекцию"""
     t = TinkoffAPI(Tokens.SECRET_KEY_TINKOFF, broker_account_id)
     portfolio = t.get_portfolio_positions()
-    statistic = t.get_all_operations(datetime(2020, 1, 1))
-
-    usd_rub_currency = portfolio.pop('usd_rub_currency')
+    statistic, operations_usd = t.get_all_operations(datetime(2020, 1, 1))
+    operations_usd_profit = operations_usd.pop(-1)
+    usd_rub_currency = t.usd_currency
     stocks = portfolio.pop('stocks')
     stocks_usd, stocks_rub = 0.00, 0.00
     for stock in stocks:
@@ -90,24 +103,24 @@ def build_collection(broker_account_id: str):
             stocks_rub += stock[6]
     stocks_sum = stocks_rub + stocks_usd * usd_rub_currency
 
-    pay_in_usd = statistic.get('pay_in_usd')
-    pay_in_rub = statistic.get('pay_in_rub')
-    pay_in_sum = pay_in_rub + pay_in_usd * usd_rub_currency
-    pay_out_usd = statistic.get('pay_out_usd')
-    pay_out_rub = statistic.get('pay_out_rub')
-    pay_out_sum = pay_out_rub + pay_out_usd * usd_rub_currency
-    dividend_usd = statistic.get('dividend_usd')
-    dividend_rub = statistic.get('dividend_rub')
-    dividend_sum = dividend_rub + dividend_usd * usd_rub_currency
-    free_usd = portfolio.pop('free_usd')
-    free_rub = t.get_portfolio_positions_rub()
-    free_sum = free_rub + free_usd * usd_rub_currency
+    pay_in_usd = statistic.get('pay_in_usd')                         # Внесено USD
+    pay_in_rub = statistic.get('pay_in_rub')                         # Внесено RUB
+    pay_in_sum = pay_in_rub + pay_in_usd * usd_rub_currency          # Внесено Всего
+    pay_out_usd = statistic.get('pay_out_usd')                       # Выведено USD
+    pay_out_rub = statistic.get('pay_out_rub')                       # Выведено RUB
+    pay_out_sum = pay_out_rub + pay_out_usd * usd_rub_currency       # Выведено Всего
+    dividend_usd = statistic.get('dividend_usd')                     # Дивиденды USD
+    dividend_rub = statistic.get('dividend_rub')                     # Дивиденды RUB
+    dividend_sum = dividend_rub + dividend_usd * usd_rub_currency    # Дивиденды Всего
+    free_usd = portfolio.pop('free_usd')                             # Свободные USD
+    free_rub = t.get_portfolio_positions_rub()                       # Свободные RUB
+    free_sum = free_rub + free_usd * usd_rub_currency                # Свободно Всего
+    profit_total = stocks_sum + free_sum - pay_out_sum - pay_in_sum  # Профит портфеля
 
     collection = {'pay_in_usd': pay_in_usd, 'pay_in_rub': pay_in_rub, 'pay_in_sum': pay_in_sum,
                   'pay_out_usd': pay_out_usd, 'pay_out_rub': pay_out_rub, 'pay_out_sum': pay_out_sum,
                   'dividend_usd': dividend_usd, 'dividend_rub': dividend_rub, 'dividend_sum': dividend_sum,
                   'free_usd': free_usd, 'free_rub': free_rub, 'free_sum': free_sum,
-                  'stocks_usd': stocks_usd, 'stocks_rub': stocks_rub, 'stocks_sum': stocks_sum,
-                  'profit': stocks_sum + free_sum - pay_out_sum - pay_in_sum}
+                  'stocks_usd': stocks_usd, 'stocks_rub': stocks_rub, 'stocks_sum': stocks_sum, 'profit': profit_total}
 
-    return {k: round(v, 2) for k, v in collection.items()}, stocks
+    return {k: round(v, 2) for k, v in collection.items()}, stocks, operations_usd, operations_usd_profit

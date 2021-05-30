@@ -2,7 +2,7 @@ from app import app, db
 from flask import render_template, request, redirect
 from flask_security import login_required
 from models import Post
-from tinkoff import build_collection
+from stocks import build_collection
 
 
 @app.route('/')
@@ -138,7 +138,11 @@ def unity_privacy_policy(game):
 @login_required
 def stocks():
     """ Страница. Ценные бумаги """
-    stats_br, stocks_br = build_collection('2001148671')
-    stats_iis, stocks_iis = build_collection('2004836843')
+    stats_br, stocks_br, operations_usd_br, operations_usd_profit_br = build_collection('2001148671')
+    stats_iis, stocks_iis, operations_usd_iis, operations_usd_profit_iis = build_collection('2004836843')
+    operations_usd = operations_usd_br + operations_usd_iis
+    operations_usd.sort(key=lambda k: k["date"])
+    operations_usd_profit = round(operations_usd_profit_br + operations_usd_profit_iis, 2)
     return render_template('stocks.html', stats_br=stats_br, stocks_br=stocks_br,
-                           stats_iis=stats_iis, stocks_iis=stocks_iis)
+                           stats_iis=stats_iis, stocks_iis=stocks_iis, operations_usd_iis=operations_usd_iis,
+                           operations_usd=operations_usd, operations_usd_profit=operations_usd_profit)
