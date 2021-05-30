@@ -6,16 +6,27 @@ Lab15.ru | Блог > {{ post.title }}
 
 {% block body %}
 <div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
-    <h1>{{ post.title }}</h1>
-    <div class="medium text-muted alert alert-secondary" role="alert">
-        <figcaption>Дата публикации: {{ post.date.strftime('%d-%m-%y') }}</figcaption>
+    <div class="media text-muted pt-3">
+        <figure>
+            <img src="{{ post.icon }}" width="64" height="64">
+            <div class="small text-muted" align="center">
+                <figcaption>{{ post.date.strftime('%d-%m-%y') }}</figcaption>
+            </div>
+        </figure>
+        <p class="media-body pb-3 pl-3 mb-0 Medium lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">{{ post.title }}</strong>
+            {{ post.intro }}
+        </p>
     </div>
-    <div class="alert alert-light">
-        <p>{{ post.text|safe }}</p>
-        {% if current_user.has_role('Admin') %}
-        <a href="/blog/{{ post.id }}/del" class="btn btn-danger">Удалить</a>
-        <a href="/blog/{{ post.id }}/update" class="btn btn-success">Редактировать</a>
-        {% endif %}
+    <div class="alert alert-primary" role="alert">
+        <div class="alert alert-light my-3">
+            <p>{{ post.text|safe }}</p>
+            <a href="/blog" class="btn btn-info">Назад</a>
+            {% if current_user.has_role('Admin') %}
+            <a href="/blog/{{ post.id }}/del" class="btn btn-danger">Удалить</a>
+            <a href="/blog/{{ post.id }}/update" class="btn btn-success">Редактировать</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
