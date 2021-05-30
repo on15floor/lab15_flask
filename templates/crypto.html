@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Lab15.ru | Криптовалюта
+{% endblock %}
+
+{% block body %}
+
+<!-- Posts -->
+<div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
+    <h4 class="border-bottom border-gray pb-2 mb-0">Криптовалюта [Binance]</h4>
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Спотовый кошелек [{{ balance_wallet|round(2) }} $]
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Ticker</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Price [$]</th>
+                            <th scope="col">My balance [$]</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in wallet %}
+                        <tr class="">
+                            <td><a href="https://www.binance.com/ru/trade/{{ el[0] }}_USDT" target="_blank">{{ el[0]
+                                }}</a></td>
+                            <td>{{ el[1] }}</td>
+                            <td>{{ el[2] }}</td>
+                            <td>{{ el[3]|round(2) }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Депозит (Хранилище) [{{ balance_deposits|round(2) }} $]
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm small text">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Ticker</th>
+                            <th scope="col">Amount[Freeze]</th>
+                            <th scope="col">Earn</th>
+                            <th scope="col">Amount[Total]</th>
+                            <th scope="col">Price [$]</th>
+                            <th scope="col">My balance [$]</th>
+                            <th scope="col">Profit [$]</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in deposits %}
+                        <tr class="">
+                            <td><a href="https://www.binance.com/ru/trade/{{ el[0] }}_USDT" target="_blank">{{ el[0]
+                                }}</a></td>
+                            <td>{{ el[1] }}</td>
+                            <td>{{ el[2] }}</td>
+                            <td>{{ el[3] }}</td>
+                            <td>{{ el[4] }}</td>
+                            <td>{{ el[5]|round(2) }}</td>
+                            <td>{{ el[6]|round(2) }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

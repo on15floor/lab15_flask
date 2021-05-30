@@ -88,8 +88,8 @@ class TinkoffAPI:
 
 
 def build_collection(broker_account_id: str):
-    """Собираем порфтель и статистику в коллекцию"""
-    t = TinkoffAPI(Tokens.SECRET_KEY_TINKOFF, broker_account_id)
+    """Собираем порфтель и статистику в коллекцию для передачи в шаблон"""
+    t = TinkoffAPI(Tokens.TINKOFF_SECRET_KEY, broker_account_id)
     portfolio = t.get_portfolio_positions()
     statistic, operations_usd = t.get_all_operations(datetime(2020, 1, 1))
     operations_usd_profit = operations_usd.pop(-1)

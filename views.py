@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 from flask_security import login_required
 from models import Post
 from stocks import build_collection
+from crypto import build_collection_crypto
 
 
 @app.route('/')
@@ -146,3 +147,12 @@ def stocks():
     return render_template('stocks.html', stats_br=stats_br, stocks_br=stocks_br,
                            stats_iis=stats_iis, stocks_iis=stocks_iis, operations_usd_iis=operations_usd_iis,
                            operations_usd=operations_usd, operations_usd_profit=operations_usd_profit)
+
+
+@app.route('/crypto')
+@login_required
+def crypto():
+    """ Страница. Криптовалюта """
+    wallet, balance_wallet, deposits, balance_deposits = build_collection_crypto()
+    return render_template('crypto.html', wallet=wallet, balance_wallet=balance_wallet,
+                           deposits=deposits, balance_deposits=balance_deposits)
