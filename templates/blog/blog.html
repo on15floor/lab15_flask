@@ -12,8 +12,10 @@ Lab15.ru | Блог
     {% for el in pages.items %}
     <div class="media text-muted pt-3">
         <figure>
-            <img src= "{{ el.icon }}" width="64" height="64">
-            <div class="small text-muted" align="center"><figcaption>{{ el.date.strftime('%d-%m-%y') }}</figcaption></div>
+            <img src="{{ el.icon }}" width="64" height="64">
+            <div class="small text-muted" align="center">
+                <figcaption>{{ el.date.strftime('%d-%m-%y') }}</figcaption>
+            </div>
         </figure>
         <p class="media-body pb-3 pl-3 mb-0 Medium lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">{{ el.title }}</strong>
@@ -23,22 +25,22 @@ Lab15.ru | Блог
     {% endfor %}
 </div>
 
-    <!-- Page navigation -->
-    <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item {% if not pages.has_prev %} disabled {% endif%}">
-                <a class="page-link" href="./blog?page={{ pages.prev_num }}" tabindex="-1" aria-disabled="true">Назад</a>
-            </li>
-            {% for page in pages.iter_pages() %}
-            <li class="page-item {% if page == pages.page %} active {% endif %}">
-                <a class="page-link" href="./blog?page={{ page }}"> {{ page }}</a>
-            </li>
-            {% endfor %}
-            <li class="page-item {% if not pages.has_next %} disabled {% endif%}">
-                <a class="page-link" href="./blog?page={{ pages.next_num }}">Вперед</a>
-            </li>
-        </ul>
-    </nav>
+<!-- Page navigation -->
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if not pages.has_prev %} disabled {% endif%}">
+            <a class="page-link" href="./blog?page={{ pages.prev_num }}" tabindex="-1" aria-disabled="true">Назад</a>
+        </li>
+        {% for page in pages.iter_pages() %}
+        <li class="page-item {% if page == pages.page %} active {% endif %}">
+            <a class="page-link" href="./blog?page={{ page }}"> {{ page }}</a>
+        </li>
+        {% endfor %}
+        <li class="page-item {% if not pages.has_next %} disabled {% endif%}">
+            <a class="page-link" href="./blog?page={{ pages.next_num }}">Вперед</a>
+        </li>
+    </ul>
+</nav>
 
 </div>
 {% endblock %}

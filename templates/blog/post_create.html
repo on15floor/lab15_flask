@@ -2,9 +2,9 @@
 
 {% block head %}
 <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
         $(document).ready(function() {
             $('#text').summernote({
             height: 300,                 // set editor height
@@ -13,7 +13,8 @@
             focus: false                 // set focus to editable area after initializing summernote
             });
         });
-    </script>
+
+</script>
 {% endblock %}
 
 {% block title %}
@@ -25,7 +26,8 @@ Lab15.ru | Блог > Создание поста
     <h1>Создать пост</h1>
     <form method="post">
         <input type="text" name="title" id="title" class="form-control" placeholder="Введите название"><br>
-        <textarea name="intro" id="intro" class="form-control" placeholder="Введите анонс"></textarea><br>
+        <textarea name="intro" id="intro" class="form-control" placeholder="Введите анонс"
+                  maxlength="200"></textarea><br>
         <textarea name="text" id="text" class="form-control" placeholder="Введите основной текст"></textarea><br>
         <textarea name="icon" id="icon" class="form-control" placeholder="Ссылка на иконку"></textarea><br>
         <input type="submit" class="btn btn-success" value="Отправить"><br>
