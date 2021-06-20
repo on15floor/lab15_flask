@@ -22,4 +22,5 @@ class Tokens:
 
 
 class Vars:
+    # Налоговый вычет ИИС
     TINKOFF_TAX_PLUS = os.getenv('TINKOFF_TAX_PLUS')
