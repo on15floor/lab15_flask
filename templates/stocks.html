@@ -17,6 +17,11 @@ Lab15.ru | Акции
                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Статистика
+                        {% if stats_br['profit'] >=0 %}
+                        <font color="#5FB404">[+ {{ stats_br['profit']+stats_iis['profit']+tax_plus }} руб.]</font>
+                        {% else %}
+                        <font color="#FA5858">[- {{ stats_br['profit']+stats_iis['profit']+tax_plus }} руб.]</font>
+                        {% endif %}
                     </button>
                 </h2>
             </div>

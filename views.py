@@ -4,6 +4,7 @@ from flask_security import login_required
 from models import Post
 from stocks import build_collection
 from crypto import build_collection_crypto
+from config import Vars
 
 
 @app.route('/')
@@ -145,8 +146,9 @@ def stocks():
     operations_usd.sort(key=lambda k: k["date"])
     operations_usd_profit = round(operations_usd_profit_br + operations_usd_profit_iis, 2)
     return render_template('stocks.html', stats_br=stats_br, stocks_br=stocks_br,
-                           stats_iis=stats_iis, stocks_iis=stocks_iis, operations_usd_iis=operations_usd_iis,
-                           operations_usd=operations_usd, operations_usd_profit=operations_usd_profit)
+                           stats_iis=stats_iis, stocks_iis=stocks_iis,
+                           operations_usd_iis=operations_usd_iis, operations_usd=operations_usd,
+                           operations_usd_profit=operations_usd_profit, tax_plus=int(Vars.TINKOFF_TAX_PLUS))
 
 
 @app.route('/crypto')
