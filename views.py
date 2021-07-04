@@ -165,15 +165,13 @@ def crypto():
 @login_required
 def birthdays():
     """ Страница. Дни рождения """
-    birthdays_db = Birthday.query.order_by(Birthday.birthday.desc())
     q = request.args.get('q')
     if q:
-        posts = Post.query.filter(Post.title.contains(q) |
-                                  Post.intro.contains(q) |
-                                  Post.text.contains(q)).order_by(Post.date.desc())
+        birthdays_db = Birthday.query.filter(Birthday.name.contains(q) |
+                                             Birthday.comment.contains(q)).order_by(Birthday.birthday.desc())
     else:
-        posts = Post.query.order_by(Post.date.desc())
-    return render_template('birthdays/birthdays.html', birthdays=birthdays_db, posts=posts)
+        birthdays_db = Birthday.query.order_by(Birthday.birthday.desc())
+    return render_template('birthdays/birthdays.html', birthdays=birthdays_db)
 
 
 @app.route('/birthdays/add', methods=['POST', 'GET'])
