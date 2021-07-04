@@ -34,3 +34,13 @@ class Role(db.Model, RoleMixin):
     """ Модель базы данных ролей пользователей """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
+
+
+class Birthday(db.Model):
+    """ Модель базы данных дней рождений """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    male = db.Column(db.Boolean, default=True)
+    birthday = db.Column(db.Date)
+    birthday_checked = db.Column(db.Boolean, default=False)
+    comment = db.Column(db.Text)

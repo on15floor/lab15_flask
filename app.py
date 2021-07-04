@@ -26,6 +26,7 @@ admin = Admin(app, 'Lab15', url='/', index_view=HomeAdminView(), template_mode='
 admin.add_view(PostView(Post, db.session))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(AdminView(Role, db.session))
+admin.add_view(AdminView(Birthday, db.session))
 
 """ Flask-Security 
  Добавление первого пользователя: 
