@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, request, redirect
 from flask_security import login_required
-from models import Post
+from models import Post, Birthday
 from stocks import build_collection
 from crypto import build_collection_crypto
 from config import Vars
@@ -62,7 +62,7 @@ def blog_post_del(pos_id):
         return "When post deleting rise exception"
 
 
-@app.route('/create_post', methods=['POST', 'GET'])
+@app.route('/blog/create_post', methods=['POST', 'GET'])
 @login_required
 def blog_post_create():
     """ Страница. Пост - Создание """
@@ -158,3 +158,18 @@ def crypto():
     wallet, balance_wallet, deposits, balance_deposits = build_collection_crypto()
     return render_template('crypto.html', wallet=wallet, balance_wallet=balance_wallet,
                            deposits=deposits, balance_deposits=balance_deposits)
+
+
+@app.route('/birthdays')
+@login_required
+def birthdays():
+    """ Страница. Дни рождения """
+    birthdays_db = Birthday.query.order_by(Birthday.birthday.desc())
+    q = request.args.get('q')
+    if q:
+        posts = Post.query.filter(Post.title.contains(q) |
+                                  Post.intro.contains(q) |
+                                  Post.text.contains(q)).order_by(Post.date.desc())
+    else:
+        posts = Post.query.order_by(Post.date.desc())
+    return render_template('birthdays/birthdays.html', birthdays=birthdays_db, posts=posts)
