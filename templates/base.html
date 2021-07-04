@@ -36,6 +36,7 @@
           background-attachment: fixed;
           background-size: cover;}
 
+
     </style>
     {% block head %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
@@ -74,14 +75,16 @@
             {% endif %}
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-            {% if request.path == '/blog' %}
-            <input type="search" class="form-control form-control-dark" placeholder="Поиск..." name="q">
-            {% if current_user.has_role('Admin') %}
-            <a href="/blog/create_post" class="btn btn-outline-warning my-2 my-sm-0">Создать</a>
-            {% endif %}
-            {% endif %}
             <div class="text-end">
                 {% if current_user.has_role('Admin') %}
+                    {% if request.path == '/blog' %}
+                    <input type="search" class="form-control form-control-dark" placeholder="Поиск..." name="q">
+                    <a href="/blog/create_post" class="btn btn-outline-warning my-2 my-sm-0">Создать</a>
+                    {% endif %}
+                    {% if request.path == '/birthdays' %}
+                    <input type="search" class="form-control form-control-dark" placeholder="Поиск..." name="q">
+                    <a href="/birthdays/add" class="btn btn-outline-warning my-2 my-sm-0">Добавить</a>
+                    {% endif %}
                 <a href="/admin" class="btn btn-outline-info my-2 my-sm-0">Admin</a>
                 <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
                 {% else %}
