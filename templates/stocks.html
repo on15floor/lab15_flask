@@ -246,9 +246,9 @@ Lab15.ru | Акции
                             data-target="#collapseFore" aria-expanded="false" aria-controls="collapseFore">
                         Обмен валют (RUB-> USD)
                         {% if operations_usd_profit >=0 %}
-                        <font color="#5FB404">[+ operations_usd_profit }} руб.]</font>
+                        <font color="#5FB404">[+ {{ operations_usd_profit }} руб.]</font>
                         {% else %}
-                        <font color="#FA5858">[{{ operations_usd_profit }} руб.]</font>
+                        <font color="#FA5858">[- {{ operations_usd_profit }} руб.]</font>
                         {% endif %}
                     </button>
                 </h2>

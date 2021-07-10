@@ -168,9 +168,9 @@ def birthdays():
     q = request.args.get('q')
     if q:
         birthdays_db = Birthday.query.filter(Birthday.name.contains(q) |
-                                             Birthday.comment.contains(q)).order_by(Birthday.birthday.desc())
+                                             Birthday.comment.contains(q)).order_by(Birthday.name)
     else:
-        birthdays_db = Birthday.query.order_by(Birthday.birthday.desc())
+        birthdays_db = Birthday.query.order_by(Birthday.name)
     return render_template('birthdays/birthdays.html', birthdays=birthdays_db)
 
 
