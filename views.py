@@ -20,6 +20,11 @@ def page_not_fount(e):
     return render_template('404.html'), 404
 
 
+@app.route('/ping')
+def ping():
+    ip_address = request.remote_addr
+    return "Requester IP: " + ip_address
+
 @app.route('/blog')
 def blog():
     """ Страница. Блог """
