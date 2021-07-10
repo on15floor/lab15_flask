@@ -30,7 +30,7 @@ Lab15.ru | Дни рождения
                     {% else %}
                     <img src="/static/birthdays/female.png" alt="" width="15" height="15">
                     {% endif %}</td>
-                <td align="center">{{ el.birthday.strftime('%d.%m.%Y') }}</td>
+                <td align="center">{{ el.birth_day }}.{{ el.birth_month }}.{{ el.birth_year }}</td>
                 <td align="center">{% if el.birthday_checked == True %}
                     <img src="/static/birthdays/checked.png" alt="" width="15" height="15">
                     {% else %}

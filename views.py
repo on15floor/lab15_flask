@@ -5,7 +5,6 @@ from models import Post, Birthday
 from stocks import build_collection
 from crypto import build_collection_crypto
 from config import Vars
-from datetime import datetime
 
 
 @app.route('/')
@@ -179,19 +178,29 @@ def birthdays():
 def birthday_add():
     """ Страница. Дни рождения - Создание """
     if request.method == 'POST':
+        # Парсим ФИО
         name = request.form['name']
+        # Парсим пол
         if request.form.getlist('male'):
             male = True
         else:
             male = False
-        birthday = datetime.date(datetime.strptime(request.form['birthday'], '%d.%m.%Y'))
+        # Парсим день рожденья
+        birthday_list = request.form['birthday'].split('.')
+        b_d = birthday_list[0]
+        b_m = birthday_list[1]
+        b_y = birthday_list[2]
+        # Парсим проверен ли день рожденья
         if request.form.getlist('birthday_checked'):
             birthday_checked = True
         else:
             birthday_checked = False
+        # Парсим примечание
         comment = request.form['comment']
 
-        birthday = Birthday(name=name, male=male, birthday=birthday, birthday_checked=birthday_checked, comment=comment)
+        # Добавляем в БД
+        birthday = Birthday(name=name, male=male, birth_day=b_d, birth_month=b_m, birth_year=b_y,
+                            birthday_checked=birthday_checked, comment=comment)
         try:
             db.session.add(birthday)
             db.session.commit()
@@ -199,4 +208,4 @@ def birthday_add():
         except:
             return "When birthday adding rise exception"
     else:
-        return render_template('birthdays/birthday_add.html')
+        return render_template('birthdays/birthday_create.html')
