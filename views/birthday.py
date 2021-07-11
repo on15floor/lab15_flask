@@ -31,24 +31,13 @@ def birthdays():
 def birthday_add():
     """ Страница. Дни рождения - Создание """
     if request.method == 'POST':
-        # Парсим ФИО
         name = request.form['name']
-        # Парсим пол
-        if request.form.getlist('male'):
-            male = True
-        else:
-            male = False
-        # Парсим день рожденья
+        male = True if request.form.getlist('male') else False
         birthday_list = request.form['birthday'].split('.')
-        b_d = birthday_list[0]
-        b_m = birthday_list[1]
-        b_y = birthday_list[2]
-        # Парсим проверен ли день рожденья
-        if request.form.getlist('birthday_checked'):
-            birthday_checked = True
-        else:
-            birthday_checked = False
-        # Парсим примечание
+        b_d = int(birthday_list[0])
+        b_m = int(birthday_list[1])
+        b_y = int(birthday_list[2])
+        birthday_checked = True if request.form.getlist('birthday_checked') else False
         comment = request.form['comment']
 
         # Добавляем в БД
@@ -62,3 +51,29 @@ def birthday_add():
             return "When birthday adding rise exception"
     else:
         return render_template('birthdays/birthday_create.html')
+
+
+@app.route('/birthdays/<int:birthday_id>/update', methods=['POST', 'GET'])
+@login_required
+def birthday_update(birthday_id):
+    """ Страница. Дни рождения - Редактирование """
+    birthday = Birthday.query.get(birthday_id)
+
+    if request.method == 'POST':
+        birthday.name = request.form['name']
+        birthday.male = True if request.form.getlist('male') else False
+        birthday_list = request.form['birthday'].split('.')
+        birthday.birth_day = int(birthday_list[0])
+        birthday.birth_month = int(birthday_list[1])
+        birthday.birth_year = int(birthday_list[2])
+        birthday.birthday_checked = True if request.form.getlist('birthday_checked') else False
+        birthday.comment = request.form['comment']
+
+        # Обновляем БД
+        try:
+            db.session.commit()
+            return redirect('/birthdays')
+        except:
+            return "When birthday updating rise exception"
+    else:
+        return render_template('birthdays/birthday_update.html', birthday=birthday)

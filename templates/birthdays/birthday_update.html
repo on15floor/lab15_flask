@@ -8,27 +8,35 @@ Lab15.ru | Блог > Редактирование записи дня рожд�
 <div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
     <h1>Редактирование дня рождения</h1>
     <form method="post">
-        <input type="text" id="name" name="name" class="form-control" placeholder="Введите ФИО"><br>
+        <input type="text" id="name" name="name" class="form-control" value="{{ birthday.name }}"><br>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div class="input-group-text">
+                    {% if birthday.male == 1 %}
                     <input type="checkbox" id="male" name="male" value="male" checked>
+                    {% else %}
+                    <input type="checkbox" id="male" name="male" value="male">
+                    {% endif %}
                 </div>
             </div>
             <label class="form-control">Пол мужской</label>
         </div>
         <input type="text" id="birthday" name="birthday" class="form-control"
-               placeholder="Введите день рождения: дд.мм.гггг"><br>
+               value="{{ birthday.birth_day }}.{{ birthday.birth_month }}.{{ birthday.birth_year }}"><br>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <div class="input-group-text">
+                    {% if birthday.birthday_checked == 1 %}
                     <input type="checkbox" id="birthday_checked" name="birthday_checked" value="birthday_checked" checked>
+                    {% else %}
+                    <input type="checkbox" id="birthday_checked" name="birthday_checked" value="birthday_checked">
+                    {% endif %}
                 </div>
             </div>
             <label class="form-control">День рождения проверен</label>
         </div>
-        <input type="text" id="comment" name="comment" class="form-control" placeholder="Комментарий"><br>
-        <input type="submit" class="btn btn-success" value="Отправить"><br>
+        <input type="text" id="comment" name="comment" class="form-control" value="{{ birthday.comment }}"><br>
+        <input type="submit" class="btn btn-success" value="Обновить"><br>
     </form>
 </div>
 {% endblock %}
