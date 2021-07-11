@@ -1,6 +1,6 @@
 import tinvest
 from datetime import datetime
-from services.utils import get_now, localize
+from utils.utils import get_now, localize
 from config import Tokens
 
 

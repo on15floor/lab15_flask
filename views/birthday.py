@@ -2,7 +2,7 @@ from app import app, db
 from flask import render_template, request, redirect
 from flask_security import login_required
 from models import Birthday
-from services.utils import get_now
+from utils.utils import get_now
 
 
 def get_date():
