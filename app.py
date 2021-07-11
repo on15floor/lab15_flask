@@ -5,7 +5,6 @@ from flask_admin import Admin
 from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
 from config import Config
-from views_admin import *
 
 """ Flask App """
 app = Flask(__name__)
@@ -13,7 +12,10 @@ app.config.from_object(Config)
 
 """ База данных (DB). Для создания DB: from app import db + db.create_all() """
 db = SQLAlchemy(app)
+
+# Import models and views
 from models import *
+from views import *
 
 """ Миграция ДБ
  For init command: flask db init

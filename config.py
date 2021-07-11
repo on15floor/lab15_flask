@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__name__))
 
 class Config:
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'blog.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     SECURITY_PASSWORD_SALT = os.getenv('SECURITY_PASSWORD_SALT')
