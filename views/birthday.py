@@ -77,3 +77,16 @@ def birthday_update(birthday_id):
             return "When birthday updating rise exception"
     else:
         return render_template('birthdays/birthday_update.html', birthday=birthday)
+
+
+@app.route('/birthdays/<int:birthday_id>/del')
+@login_required
+def birthday_del(birthday_id):
+    """ Страница. День рождения - Удаление """
+    birthday = Birthday.query.get(birthday_id)
+    try:
+        db.session.delete(birthday)
+        db.session.commit()
+        return redirect('/birthdays')
+    except:
+        return "When birthday deleting rise exception"
