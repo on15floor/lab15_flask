@@ -75,7 +75,7 @@
                     <a class="dropdown-item" href="/crypto">Крипто</a>
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/birthdays">ДР</a></li>
+            <li class="nav-item"><a class="nav-link" href="/birthdays/today">ДР</a></li>
             {% endif %}
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -85,7 +85,7 @@
                     <input type="search" class="form-control form-control-dark" placeholder="Поиск..." name="q">
                     <a href="/blog/create_post" class="btn btn-outline-warning my-2 my-sm-0">Создать</a>
                     {% endif %}
-                    {% if request.path == '/birthdays' %}
+                    {% if request.path == '/birthdays/all' or request.path == '/birthdays/today' or request.path == '/birthdays/m' or request.path == '/birthdays/w' %}
                     <input type="search" class="form-control form-control-dark" placeholder="Поиск..." name="q">
                     <a href="/birthdays/add" class="btn btn-outline-warning my-2 my-sm-0">Добавить</a>
                     {% endif %}

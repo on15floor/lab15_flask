@@ -13,17 +13,28 @@ def get_date():
     return date_d, date_m, date_y
 
 
-@app.route('/birthdays')
+@app.route('/birthdays/<string:f>')
 @login_required
-def birthdays():
+def birthdays(f):
     """ Страница. Дни рождения """
     q = request.args.get('q')
+    date_today = get_date()
     if q:
         birthdays_db = Birthday.query.filter(Birthday.name.contains(q) |
                                              Birthday.comment.contains(q)).order_by(Birthday.birth_month)
     else:
-        birthdays_db = Birthday.query.order_by(Birthday.birth_month)
-    return render_template('birthdays/birthdays.html', birthdays=birthdays_db, today=get_date())
+        if f == 'all':
+            birthdays_db = Birthday.query.order_by(Birthday.birth_month)
+        elif f == 'today':
+            birthdays_db = Birthday.query.filter(Birthday.birth_month.contains(date_today[1]))
+        elif f == 'w':
+            birthdays_db = Birthday.query.filter(Birthday.male.contains(0))
+        elif f == 'm':
+            birthdays_db = Birthday.query.filter(Birthday.male.contains(1))
+        else:
+            return render_template('404.html')
+
+    return render_template('birthdays/birthdays.html', birthdays=birthdays_db, today=date_today)
 
 
 @app.route('/birthdays/add', methods=['POST', 'GET'])
