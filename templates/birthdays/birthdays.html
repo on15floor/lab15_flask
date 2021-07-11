@@ -15,7 +15,7 @@ Lab15.ru | Дни рождения
                 <th scope="col" width="5%">id</th>
                 <th scope="col" width="45%">Имя</th>
                 <th scope="col" width="5%">Пол</th>
-                <th scope="col" width="10%">День рождения</th>
+                <th scope="col" width="10%">ДР</th>
                 <th scope="col" width="10%">Проверен</th>
                 <th scope="col" width="10%">Примечание</th>
             </tr>
@@ -24,13 +24,13 @@ Lab15.ru | Дни рождения
             {% for el in birthdays %}
             <tr class="">
                 <td align="center">{{ el.id }}</td>
-                <td>{{ el.name }}</td>
+                <td>{{ el.name }} [{{ today[2] - el.birth_year}}]</td>
                 <td align="center">{% if el.male == True %}
                     <img src="/static/birthdays/male.png" alt="" width="15" height="15">
                     {% else %}
                     <img src="/static/birthdays/female.png" alt="" width="15" height="15">
                     {% endif %}</td>
-                <td align="center">{{ el.birth_day }}.{{ el.birth_month }}.{{ el.birth_year }}</td>
+                <td align="center">{{ el.birth_day|zfill(2) }}.{{ el.birth_month|zfill(2) }}.{{ el.birth_year|zfill(2) }}</td>
                 <td align="center">{% if el.birthday_checked == True %}
                     <img src="/static/birthdays/checked.png" alt="" width="15" height="15">
                     {% else %}

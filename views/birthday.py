@@ -2,6 +2,15 @@ from app import app, db
 from flask import render_template, request, redirect
 from flask_security import login_required
 from models import Birthday
+from services.utils import get_now
+
+
+def get_date():
+    date_full = get_now()
+    date_d = date_full.day
+    date_m = date_full.month
+    date_y = date_full.year
+    return date_d, date_m, date_y
 
 
 @app.route('/birthdays')
@@ -11,10 +20,10 @@ def birthdays():
     q = request.args.get('q')
     if q:
         birthdays_db = Birthday.query.filter(Birthday.name.contains(q) |
-                                             Birthday.comment.contains(q)).order_by(Birthday.name)
+                                             Birthday.comment.contains(q)).order_by(Birthday.birth_month)
     else:
-        birthdays_db = Birthday.query.order_by(Birthday.name)
-    return render_template('birthdays/birthdays.html', birthdays=birthdays_db)
+        birthdays_db = Birthday.query.order_by(Birthday.birth_month)
+    return render_template('birthdays/birthdays.html', birthdays=birthdays_db, today=get_date())
 
 
 @app.route('/birthdays/add', methods=['POST', 'GET'])

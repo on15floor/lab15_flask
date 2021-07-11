@@ -16,6 +16,7 @@ db = SQLAlchemy(app)
 # Import models and views
 from models import *
 from views import *
+from services.filters import *
 
 """ Миграция ДБ
  For init command: flask db init

@@ -1,15 +1,7 @@
 import tinvest
 from datetime import datetime
-from pytz import timezone
+from services.utils import get_now, localize
 from config import Tokens
-
-
-def localize(d: datetime) -> datetime:
-    return timezone('Europe/Moscow').localize(d)
-
-
-def get_now() -> datetime:
-    return localize(datetime.now())
 
 
 class TinkoffAPI:
