@@ -7,8 +7,8 @@ class TBot:
     def __init__(self):
         """ Инициализация бота """
         bot_token = Tokens.TELEGRAM_BOT_TOKEN
-        self.bot = telebot.TeleBot(bot_token)
+        self._bot = telebot.TeleBot(bot_token)
 
     def send_message(self, chat_id=-1001254598595, message=''):
         """ Отправка сообщения, chat_id - id группы или пользователя"""
-        self.bot.send_message(chat_id, message)
+        self._bot.send_message(chat_id, message)

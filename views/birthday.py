@@ -3,6 +3,8 @@ from flask import render_template, request, redirect
 from flask_security import login_required
 from models import Birthday
 from utils.utils import get_now
+from services.telegram import TBot
+from services.pozdravlala import get_congratulation
 
 
 def get_date():
@@ -57,7 +59,7 @@ def birthday_add():
         try:
             db.session.add(birthday)
             db.session.commit()
-            return redirect('/birthdays')
+            return redirect('/birthdays/all')
         except:
             return "When birthday adding rise exception"
     else:
@@ -83,7 +85,7 @@ def birthday_update(birthday_id):
         # Обновляем БД
         try:
             db.session.commit()
-            return redirect('/birthdays')
+            return redirect('/birthdays/all')
         except:
             return "When birthday updating rise exception"
     else:
@@ -98,6 +100,21 @@ def birthday_del(birthday_id):
     try:
         db.session.delete(birthday)
         db.session.commit()
-        return redirect('/birthdays')
+        return redirect('/birthdays/all')
     except:
         return "When birthday deleting rise exception"
+
+
+@app.route('/birthdays/t')
+def birthday_t():
+    """ Отправка информации о сегодняшних именниках """
+    date_today = get_date()
+    t = TBot()
+    birthdays_list = []
+    birthdays_db = Birthday.query.filter(Birthday.birth_month.contains(date_today[1])).all()
+    for b in birthdays_db:
+        if date_today[0] == b.birth_day:
+            birthdays_list.append(b)
+    t.send_message(message='Сегодня свои дни рождения празднуют:\n')
+    t.send_message(message=get_congratulation(1, 1, 2, 0, 0))
+    return redirect('/ping')
