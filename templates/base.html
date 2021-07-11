@@ -58,19 +58,23 @@
             </li>
             <li class="nav-item"><a class="nav-link" href="/blog">Блог</a></li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Unity
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUnity" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Unity</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownUnity">
                     <a class="dropdown-item" href="/unity/simple_cube">Simple Cube</a>
                     <a class="dropdown-item" href="/unity/delimiter">Delimiter</a>
                     <a class="dropdown-item" href="/unity/kot_guide">KoT Guide</a>
                 </div>
             </li>
             {% if current_user.has_role('Admin') %}
-            <li class="nav-item"><a class="nav-link" href="/stocks">Акции</a></li>
-            <li class="nav-item"><a class="nav-link" href="/crypto">Крипто</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMoney" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Money</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMoney">
+                    <a class="dropdown-item" href="/stocks">Акции</a>
+                    <a class="dropdown-item" href="/crypto">Крипто</a>
+                </div>
+            </li>
             <li class="nav-item"><a class="nav-link" href="/birthdays">ДР</a></li>
             {% endif %}
         </ul>
