@@ -110,11 +110,29 @@ def birthday_t():
     """ Отправка информации о сегодняшних именниках """
     date_today = get_date()
     t = TBot()
-    birthdays_list = []
+    birthday_people = ''
+
     birthdays_db = Birthday.query.filter(Birthday.birth_month.contains(date_today[1])).all()
     for b in birthdays_db:
         if date_today[0] == b.birth_day:
-            birthdays_list.append(b)
-    t.send_message(message='Сегодня свои дни рождения празднуют:\n')
+            if b.male == 1:
+                male = '🚹'
+            else:
+                male = '🚺'
+            if b.birthday_checked == 1:
+                birthday_checked = '✅'
+            else:
+                birthday_checked = '❌'
+            # Определяем возраст
+            if b.birth_month >= date_today[1]:
+                if b.birth_day > date_today[0]:
+                    age = date_today[2] - b.birth_year - 1
+                else:
+                    age = date_today[2] - b.birth_year
+            else:
+                age = date_today[2] - b.birth_year - 1
+            birthday_people += f'{male}{birthday_checked}{b.name} [{age} лет]\n'
+    t.send_message(
+        message=f'{date_today[0]}.{date_today[1]}.{date_today[2]} свои дни рождения празднуют:{birthday_people}\n')
     t.send_message(message=get_congratulation(1, 1, 2, 0, 0))
     return redirect('/ping')
