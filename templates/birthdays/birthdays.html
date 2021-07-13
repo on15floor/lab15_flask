@@ -19,14 +19,24 @@ Lab15.ru | Дни рождения
                 <th scope="col" width="50%">Имя</th>
                 <th scope="col" width="5%">Пол</th>
                 <th scope="col" width="10%">ДР</th>
-                <th scope="col" width="10%">Проверен</th>
+                <th scope="col" width="10%">Check</th>
                 <th scope="col" width="10%">Примечание</th>
             </tr>
         </thead>
         <tbody>
             {% for el in birthdays %}
             <tr class="">
-                <td><a href="/birthdays/{{ el.id }}/update">[{{ today[2] - el.birth_year}}] {{ el.name }}</a></td>
+                <!-- Full years count -->
+                {% if el.birth_month >= today[1] %}
+                    {% if el.birth_day > today[0] %}
+                        <td><a href="/birthdays/{{ el.id }}/update">[{{ today[2] - el.birth_year - 1}}] {{ el.name }}</a></td>
+                    {% else %}
+                        <td><a href="/birthdays/{{ el.id }}/update">[{{ today[2] - el.birth_year}}] {{ el.name }}</a></td>
+                    {% endif %}
+                {% else %}
+                    <td><a href="/birthdays/{{ el.id }}/update">[{{ today[2] - el.birth_year}}] {{ el.name }}</a></td>
+                {% endif %}
+                <!-- Full years count END-->
                 <td align="center">{% if el.male == True %}
                     <img src="/static/birthdays/male.png" alt="" width="15" height="15">
                     {% else %}

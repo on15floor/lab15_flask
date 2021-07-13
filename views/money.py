@@ -14,6 +14,9 @@ def stocks():
     stats_iis, stocks_iis, operations_usd_iis, operations_usd_profit_iis = build_collection('2004836843')
     operations_usd = operations_usd_br + operations_usd_iis
     operations_usd.sort(key=lambda k: k["date"])
+    # Форматирование operation_usd. Приводим дату к виду дд.мм.гггг
+    for el in operations_usd:
+        el['date'] = el['date'].strftime("%d.%m.%Y")
     operations_usd_profit = round(operations_usd_profit_br + operations_usd_profit_iis, 2)
     return render_template('stocks.html', stats_br=stats_br, stocks_br=stocks_br,
                            stats_iis=stats_iis, stocks_iis=stocks_iis,
