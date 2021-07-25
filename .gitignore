@@ -1,3 +1,4 @@
-.env
 /migrations
+/venv
+.env
 database.db
