@@ -117,8 +117,10 @@ def birthday_t():
         if date_today[0] == b.birth_day:
             if b.male == 1:
                 male = '🚹'
+                t.send_message(message=get_congratulation(reason=1, gender=0, l_c=2, polite=0, tr=0))
             else:
                 male = '🚺'
+                t.send_message(message=get_congratulation(reason=1, gender=1, l_c=2, polite=0, tr=0))
             if b.birthday_checked == 1:
                 birthday_checked = '✅'
             else:
@@ -132,7 +134,7 @@ def birthday_t():
             else:
                 age = date_today[2] - b.birth_year - 1
             birthday_people += f'{male}{birthday_checked}{b.name} [{age} лет]\n'
-    t.send_message(
-        message=f'{date_today[0]}.{date_today[1]}.{date_today[2]} свои дни рождения празднуют:{birthday_people}\n')
-    t.send_message(message=get_congratulation(1, 1, 2, 0, 0))
+    if birthday_people:
+        t.send_message(message=f'Сегодня свои дни рождения празднуют:\n {birthday_people}')
+
     return redirect('/ping')
