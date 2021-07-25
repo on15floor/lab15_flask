@@ -1,4 +1,5 @@
 /migrations
 /venv
+/.idea
 .env
 database.db
