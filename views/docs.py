@@ -5,6 +5,7 @@ import markdown
 import os
 
 
+# Конвертирует файл Markdown
 def get_markdown(file_name):
     data_file = os.path.join(BASE_DIR, f'static/docs/{file_name}')
     with open(data_file) as f:
@@ -15,7 +16,8 @@ def get_markdown(file_name):
 @app.route('/docs/<string:f>')
 def docs_git(f):
     """ Страница. Docs """
-    doc = ''
-    if f == 'git':
-        doc = get_markdown('git.md')
-    return render_template('/docs.html', doc=Markup(doc))
+    params = ['git', 'markdown']
+    if f in params:
+        return render_template('/docs.html', doc=Markup(get_markdown(f'{f}.md')))
+    else:
+        return render_template('404.html')
