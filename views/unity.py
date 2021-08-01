@@ -24,11 +24,10 @@ def unity_kot_guide():
 @app.route('/unity/privacy_policy/<string:game>')
 def unity_privacy_policy(game):
     """ Страница. Unity - Политика приватности """
-    if game == 'simple_cube':
-        return render_template('/unity/privacy_policy.html', game='Simple Cube')
-    elif game == 'delimiter':
-        return render_template('/unity/privacy_policy.html', game='Delimiter')
-    elif game == 'kot_guide':
-        return render_template('/unity/privacy_policy.html', game='KoT Guide')
+    games = {'simple_cube': 'Simple Cube',
+             'delimiter': 'Delimiter',
+             'kot_guide': 'KoT Guide'}
+    if game in games.keys():
+        return render_template('/unity/privacy_policy.html', game=games[game])
     else:
         return render_template('404.html')
