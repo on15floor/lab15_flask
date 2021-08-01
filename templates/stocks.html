@@ -29,11 +29,11 @@ Lab15.ru | Акции
                 <div class="card-body">
                     <table class="table table-bordered table-sm small text">
                         <thead class="thead-dark">
-                        <tr>
+                        <tr align="center">
                             <th scope="col"></th>
-                            <th scope="col">USD</th>
-                            <th scope="col">RUB</th>
-                            <th scope="col">Сумма(RUB)</th>
+                            <th scope="col">$</th>
+                            <th scope="col">&#8381</th>
+                            <th scope="col">&#8721(&#8381)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,13 +44,13 @@ Lab15.ru | Акции
                             <td>{{ stats_br['pay_in_sum'] + stats_iis['pay_in_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > Брокерский счет</td>
+                            <td>БC</td>
                             <td>{{ stats_br['pay_in_usd'] }}</td>
                             <td>{{ stats_br['pay_in_rub'] }}</td>
                             <td>{{ stats_br['pay_in_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > ИИС</td>
+                            <td>ИИС</td>
                             <td>{{ stats_iis['pay_in_usd'] }}</td>
                             <td>{{ stats_iis['pay_in_rub'] }}</td>
                             <td>{{ stats_iis['pay_in_sum'] }}</td>
@@ -62,13 +62,13 @@ Lab15.ru | Акции
                             <td>{{ stats_br['pay_out_sum'] + stats_iis['pay_out_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > Брокерский счет</td>
+                            <td>БС</td>
                             <td>{{ stats_br['pay_out_usd'] }}</td>
                             <td>{{ stats_br['pay_out_rub'] }}</td>
                             <td>{{ stats_br['pay_out_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > ИИС</td>
+                            <td>ИИС</td>
                             <td>{{ stats_iis['pay_out_usd'] }}</td>
                             <td>{{ stats_iis['pay_out_rub'] }}</td>
                             <td>{{ stats_iis['pay_out_sum'] }}</td>
@@ -80,13 +80,13 @@ Lab15.ru | Акции
                             <td>{{ stats_br['dividend_sum'] + stats_iis['dividend_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > Брокерский счет</td>
+                            <td>БС</td>
                             <td>{{ stats_br['dividend_usd'] }}</td>
                             <td>{{ stats_br['dividend_rub'] }}</td>
                             <td>{{ stats_br['dividend_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > ИИС</td>
+                            <td>ИИС</td>
                             <td>{{ stats_iis['dividend_usd'] }}</td>
                             <td>{{ stats_iis['dividend_rub'] }}</td>
                             <td>{{ stats_iis['dividend_sum'] }}</td>
@@ -98,13 +98,13 @@ Lab15.ru | Акции
                             <td>{{ (stats_br['free_sum'] + stats_iis['free_sum'])|round(2) }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > Брокерский счет</td>
+                            <td>БС</td>
                             <td>{{ stats_br['free_usd'] }}</td>
                             <td>{{ stats_br['free_rub'] }}</td>
                             <td>{{ stats_br['free_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > ИИС</td>
+                            <td>ИИС</td>
                             <td>{{ stats_iis['free_usd'] }}</td>
                             <td>{{ stats_iis['free_rub'] }}</td>
                             <td>{{ stats_iis['free_sum'] }}</td>
@@ -116,13 +116,13 @@ Lab15.ru | Акции
                             <td>{{ stats_br['stocks_sum'] + stats_iis['stocks_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > Брокерский счет</td>
+                            <td>БС</td>
                             <td>{{ stats_br['stocks_usd'] }}</td>
                             <td>{{ stats_br['stocks_rub'] }}</td>
                             <td>{{ stats_br['stocks_sum'] }}</td>
                         </tr>
                         <tr class="bg-light">
-                            <td> > ИИС</td>
+                            <td>ИИС</td>
                             <td>{{ stats_iis['stocks_usd'] }}</td>
                             <td>{{ stats_iis['stocks_rub'] }}</td>
                             <td>{{ stats_iis['stocks_sum'] }}</td>
@@ -151,7 +151,7 @@ Lab15.ru | Акции
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-sm small text">
                         <thead class="thead-dark">
-                        <tr>
+                        <tr align="center">
                             <th scope="col" width="4%">Tick</th>
                             <th scope="col" width="50%">Company</th>
                             <th scope="col" width="3%">&#8721</th>
@@ -204,7 +204,7 @@ Lab15.ru | Акции
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-sm small text">
                         <thead class="thead-dark">
-                        <tr>
+                        <tr align="center">
                             <th scope="col" width="4%">Tick</th>
                             <th scope="col" width="50%">Company</th>
                             <th scope="col" width="3%">&#8721</th>
@@ -248,7 +248,7 @@ Lab15.ru | Акции
                         {% if operations_usd_profit >=0 %}
                         <font color="#5FB404">[+ {{ operations_usd_profit }} руб.]</font>
                         {% else %}
-                        <font color="#FA5858">[- {{ operations_usd_profit }} руб.]</font>
+                        <font color="#FA5858">[{{ operations_usd_profit }} руб.]</font>
                         {% endif %}
                     </button>
                 </h2>
@@ -257,7 +257,7 @@ Lab15.ru | Акции
                 <div class="card-body">
                     <table class="table table-striped table-bordered table-sm small text">
                         <thead class="thead-dark">
-                        <tr>
+                        <tr align="center">
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Price</th>
