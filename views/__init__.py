@@ -4,3 +4,4 @@ from .main import *
 from .money import *
 from .unity import *
 from .admin import *
+from .docs import *

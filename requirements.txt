@@ -44,3 +44,4 @@ urllib3==1.26.4
 Werkzeug==2.0.1
 WTForms==2.3.3
 yarl==1.6.3
+Markdown~=3.3.4
