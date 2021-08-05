@@ -16,7 +16,7 @@ def get_markdown(file_name):
 @app.route('/docs/<string:f>')
 def docs_git(f):
     """ Страница. Docs """
-    params = ['git', 'markdown']
+    params = ['git', 'markdown', 'python', 'sql', 'bash']
     if f in params:
         return render_template('/docs.html', doc=Markup(get_markdown(f'{f}.md')))
     else:

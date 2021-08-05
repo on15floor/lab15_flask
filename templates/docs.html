@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Документы
+Шпаргалки
 {% endblock %}
 
 {% block body %}
 <div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
-    <h4 class="border-bottom border-gray pb-2 mb-0">Документы:
+    <h4 class="border-bottom border-gray pb-2 mb-0">Шпаргалки:
         <a href="/docs/git" class="btn btn-primary btn-sm">GIT</a>
         <a href="/docs/markdown" class="btn btn-secondary btn-sm">MarkDown</a>
-        <a href="/docs/git" class="btn btn-success btn-sm">Python</a>
-        <a href="/docs/git" class="btn btn-danger btn-sm">SQL</a>
-        <a href="/docs/git" class="btn btn-warning btn-sm">Terminal</a>
+        <a href="/docs/python" class="btn btn-success btn-sm">Python</a>
+        <a href="/docs/sql" class="btn btn-danger btn-sm">SQL</a>
+        <a href="/docs/bash" class="btn btn-warning btn-sm">BASH</a>
     </h4>
     {{ doc }}
 </div>
