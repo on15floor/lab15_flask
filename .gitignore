@@ -4,3 +4,4 @@
 /tmp
 .env
 database.db
+errors.log

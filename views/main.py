@@ -1,4 +1,5 @@
 from flask import render_template, request
+
 from app import app
 
 
@@ -19,3 +20,9 @@ def page_not_fount():
 def ping():
     ip_address = request.remote_addr
     return "Requester IP: " + ip_address
+
+
+@app.errorhandler(500)
+def internal_error(exception):
+    app.logger.error(exception)
+    return render_template('404.html'), 500

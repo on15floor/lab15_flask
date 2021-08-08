@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -7,7 +8,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__name__))
 
 
 class Config:
-    DEBUG = True
+    DEBUG = os.getenv('FLASK_DEBUG')
+    print(DEBUG)
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
@@ -25,4 +27,5 @@ class Tokens:
 class Vars:
     # Налоговый вычет ИИС
     TINKOFF_TAX_PLUS = os.getenv('TINKOFF_TAX_PLUS')
+    # Временная зона
     TIME_ZONE = 'Europe/Moscow'

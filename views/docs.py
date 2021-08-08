@@ -1,8 +1,10 @@
+import os
+
+import markdown
 from flask import render_template, Markup
+
 from app import app
 from config import BASE_DIR
-import markdown
-import os
 
 
 # Конвертирует файл Markdown
@@ -16,7 +18,7 @@ def get_markdown(file_name):
 @app.route('/docs/<string:f>')
 def docs_git(f):
     """ Страница. Docs """
-    params = ['git', 'markdown', 'python', 'sql', 'bash']
+    params = ['git', 'markdown', 'python', 'sql', 'bash', 't']
     if f in params:
         return render_template('/docs.html', doc=Markup(get_markdown(f'{f}.md')))
     else:
