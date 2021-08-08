@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__name__))
+FLASK_FOLDER = os.getenv('FLASK_FOLDER')
 
 
 class Config:

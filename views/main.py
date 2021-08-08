@@ -4,16 +4,9 @@ from app import app
 
 
 @app.route('/')
-@app.route('/home')
 def index():
     """ Страница. Главная """
     return render_template('index.html')
-
-
-@app.errorhandler(404)
-def page_not_fount():
-    """ Страница. 404 """
-    return render_template('404.html'), 404
 
 
 @app.route('/ping')
@@ -22,7 +15,14 @@ def ping():
     return "Requester IP: " + ip_address
 
 
+@app.errorhandler(404)
+def page_not_fount():
+    """ Страница. 404 """
+    return render_template('404.html'), 404
+
+
 @app.errorhandler(500)
 def internal_error(exception):
+    """ Страница. 500 """
     app.logger.error(exception)
-    return render_template('404.html'), 500
+    return render_template('500.html'), 500
