@@ -5,3 +5,4 @@
 .env
 database.db
 errors.log
+beget_pull.sh
