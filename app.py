@@ -35,10 +35,10 @@ migrate = Migrate(app, db)
 
 """ Администратор """
 admin = Admin(app, 'Lab15', url='/', index_view=HomeAdminView(), template_mode='bootstrap4')
-admin.add_view(PostView(Post, db.session))
-admin.add_view(AdminView(User, db.session))
-admin.add_view(AdminView(Role, db.session))
-admin.add_view(AdminView(Birthday, db.session))
+admin.add_view(PostAdminView(Post, db.session))
+admin.add_view(UserAdminView(User, db.session))
+admin.add_view(RoleAdminView(Role, db.session))
+admin.add_view(BirthdayAdminView(Birthday, db.session))
 
 """ Flask-Security 
  Добавление первого пользователя: 
