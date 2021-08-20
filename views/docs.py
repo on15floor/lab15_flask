@@ -4,17 +4,12 @@ import markdown
 from flask import render_template, Markup
 
 from app import app
-from config import BASE_DIR, FLASK_FOLDER
+from config import BASE_DIR
 
 
 # Конвертирует файл Markdown
 def get_markdown(file_name):
-    # Debug включен на только локальном сервере, путь соответствующий
-    if app.debug is True:
-        data_file = os.path.join(BASE_DIR, f'static/docs/{file_name}')
-    # Если мы запускаем на хостинге, путь немного другой
-    else:
-        data_file = os.path.join(BASE_DIR, FLASK_FOLDER, f'static/docs/{file_name}')
+    data_file = os.path.join(BASE_DIR, f'static/docs/{file_name}')
     with open(data_file) as f:
         return markdown.markdown(f.read())
 
