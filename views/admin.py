@@ -3,7 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, expose
 from flask_security import current_user
 import subprocess
-from config import BASE_DIR
+from config import APP_DIR
 
 
 class AdminMixin:
@@ -31,7 +31,7 @@ class HomeAdminView(AdminMixin, AdminIndexView):
             '--date=relative',
             '--since=6 month ago',  # Коммиты за последние 6 месяцев
         ]
-        result = subprocess.run(command, cwd=BASE_DIR, stdout=subprocess.PIPE)
+        result = subprocess.run(command, cwd=APP_DIR, stdout=subprocess.PIPE)
         git_log = result.stdout.decode("utf-8")
         git_log = git_log.replace('\n', '<br />')
 

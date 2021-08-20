@@ -6,16 +6,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DEBUG = os.getenv('FLASK_DEBUG')
-BASE_DIR = os.path.dirname(os.path.abspath(__name__))
-FLASK_DIR = os.getenv('FLASK_FOLDER')
+
+# Директории
+DB_DIR = os.path.dirname(os.path.abspath(__name__))
+APP_DIR = DB_DIR
+SRV_DIR = os.getenv('FLASK_FOLDER')
 # Debug включен только на локальном сервере, на боевом сервере немного другой путь
 if DEBUG == '0':
-    BASE_DIR = os.path.join(BASE_DIR, FLASK_DIR)
+    APP_DIR = os.path.join(APP_DIR, SRV_DIR)
 
 
 class Config:
     DEBUG = DEBUG
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(DB_DIR, 'database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     SECURITY_PASSWORD_SALT = os.getenv('SECURITY_PASSWORD_SALT')
