@@ -8,8 +8,8 @@ load_dotenv()
 DEBUG = os.getenv('FLASK_DEBUG')
 BASE_DIR = os.path.dirname(os.path.abspath(__name__))
 FLASK_DIR = os.getenv('FLASK_FOLDER')
-# Debug включен на только локальном сервере, на сервере немного другой путь
-if DEBUG == 0:
+# Debug включен только на локальном сервере, на боевом сервере немного другой путь
+if DEBUG == '0':
     BASE_DIR = os.path.join(BASE_DIR, FLASK_DIR)
 
 
