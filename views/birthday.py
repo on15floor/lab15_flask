@@ -1,18 +1,9 @@
-from app import app, db
 from flask import render_template, request, redirect
 from flask_security import login_required
+
+from app import app, db
 from models import Birthday
-from utils.utils import get_now
-from services.telegram import TBot
-from services.pozdravlala import get_congratulation
-
-
-def get_date():
-    date_full = get_now()
-    date_d = date_full.day
-    date_m = date_full.month
-    date_y = date_full.year
-    return date_d, date_m, date_y
+from utils.utils import get_date_integer
 
 
 @app.route('/birthdays/<string:f>')
@@ -20,7 +11,7 @@ def get_date():
 def birthdays(f):
     """ Страница. Дни рождения """
     q = request.args.get('q')
-    date_today = get_date()
+    date_today = get_date_integer()
     if q:
         birthdays_db = Birthday.query.filter(Birthday.name.contains(q) |
                                              Birthday.comment.contains(q)).order_by(Birthday.birth_month)
@@ -103,38 +94,3 @@ def birthday_del(birthday_id):
         return redirect('/birthdays/all')
     except:
         return "When birthday deleting rise exception"
-
-
-@app.route('/birthdays/t')
-def birthday_t():
-    """ Отправка информации о сегодняшних именниках """
-    date_today = get_date()
-    t = TBot()
-    birthday_people = ''
-
-    birthdays_db = Birthday.query.filter(Birthday.birth_month.contains(date_today[1])).all()
-    for b in birthdays_db:
-        if date_today[0] == b.birth_day:
-            if b.male == 1:
-                male = '🚹'
-                t.send_message(message=get_congratulation(reason=1, gender=0, l_c=2, polite=0, tr=0))
-            else:
-                male = '🚺'
-                t.send_message(message=get_congratulation(reason=1, gender=1, l_c=2, polite=0, tr=0))
-            if b.birthday_checked == 1:
-                birthday_checked = '✅'
-            else:
-                birthday_checked = '❌'
-            # Определяем возраст
-            if b.birth_month >= date_today[1]:
-                if b.birth_day > date_today[0]:
-                    age = date_today[2] - b.birth_year - 1
-                else:
-                    age = date_today[2] - b.birth_year
-            else:
-                age = date_today[2] - b.birth_year - 1
-            birthday_people += f'{male}{birthday_checked}{b.name} [{age} лет]\n'
-    if birthday_people:
-        t.send_message(message=f'Сегодня свои дни рождения празднуют:\n {birthday_people}')
-
-    return redirect('/ping')
