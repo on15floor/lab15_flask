@@ -1,9 +1,21 @@
+import requests
+from bs4 import BeautifulSoup
 from flask import jsonify
 
-from app import app
-from models import Birthday
+from app import app, db
+from models import Birthday, Beget
 from services.telegram import TBot
 from utils.utils import get_date_integer
+
+
+def beget_news_pars() -> list:
+    response = requests.get("https://beget.com/ru/news/2021/beget-12-years")
+    soup = BeautifulSoup(response.text, 'html.parser')
+    news = soup.find_all("ul", {"class": "nav nav-category-tree flex-nowrap my-0"})
+    res = []
+    for n in news[0].contents:
+        res.append(n.text.strip())
+    return res
 
 
 @app.route('/api/v1.0/get_birthdays', methods=['GET'])
@@ -29,5 +41,30 @@ def birthday():
             birthday_people += f'{male}{birthday_checked}{b.name} [{age} лет]\n'
     if birthday_people:
         t.send_message(message=f'Сегодня свои дни рождения празднуют:\n {birthday_people}')
+
+    return jsonify({'status': 'success'})
+
+
+@app.route('/api/v1.0/get_beget_news', methods=['GET'])
+def get_beget_news():
+    """ Проверка новостей beget.ru и отправка новых """
+    news_in = beget_news_pars()
+    news_db_data = Beget.query.order_by(Beget.id).all()
+    news_db_text = []
+    for n in news_db_data:
+        news_db_text.append(n.text)
+
+    # Проверяем наличие новый новостей
+    for n in news_in:
+        if n not in news_db_text:
+            news = Beget(text=n)
+            try:
+                db.session.add(news)
+                db.session.commit()
+            except:
+                return "When news adding rise exception"
+            finally:
+                t = TBot()
+                t.send_message(message=f'ℹ️Beget news:\n {n}')
 
     return jsonify({'status': 'success'})

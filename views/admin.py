@@ -65,3 +65,7 @@ class BirthdayAdminView(AdminMixin, ModelView):
     }
 
     column_exclude_list = ['birth_month', 'birth_year']
+
+
+class BegetAdminView(AdminMixin, ModelView):
+    pass
