@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Без сигарет
+{% endblock %}
+
+{% block body %}
+
+<!-- Posts -->
+<div class="container pt-5 my-3 p-3 bg-white rounded shadow-sm">
+    <h4 class="border-bottom border-gray pb-2 mb-0">Без сигарет 🚭</h4>
+    <div class="my-3 p-3 pt-3 alert alert-secondary" role="alert">
+        Когда человек отказывается от сигарет, его организм сразу начинает восстанавливаться естественным образом. Чем
+        раньше бросить курить, тем быстрее можно снизить риск рака, болезней сердца, легких и других малоприятных
+        последствий этой пагубной привычки.
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3">
+        {% for el in no_smoking_db %}
+        <div class="col mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h6 class="card-title">{{ el.name }} ({{ el.time_descr }})</h6>
+                <p class="small text-muted">{{ el.text }}</p>
+                <div class="progress" style="height: 10px;">
+                    {% if stop_time|percent_left(el.time) == 100 %}
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+                    {% else %}
+                    <div class="progress-bar bg-danger" role="progressbar"
+                         style="width: {{ stop_time|percent_left(el.time) }}%">
+                        {{ stop_time|percent_left(el.time) }}%
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </div>
+         {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}
