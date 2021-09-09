@@ -23,12 +23,12 @@
                 <h6 class="card-title">{{ el.name }} ({{ el.time_descr }})</h6>
                 <p class="small text-muted">{{ el.text }}</p>
                 <div class="progress" style="height: 10px;">
-                    {% if stop_time|percent_left(el.time) == 100 %}
+                    {% if data_out['time_stop']|percent_left(el.time) == 100 %}
                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
                     {% else %}
                     <div class="progress-bar bg-danger" role="progressbar"
-                         style="width: {{ stop_time|percent_left(el.time) }}%">
-                        {{ stop_time|percent_left(el.time) }}%
+                         style="width: {{ data_out['time_stop']|percent_left(el.time) }}%">
+                        {{ data_out['time_stop']|percent_left(el.time) }}%
                     </div>
                     {% endif %}
                 </div>
