@@ -2,7 +2,6 @@ import os
 
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 DEBUG = os.getenv('FLASK_DEBUG')
@@ -11,9 +10,12 @@ DEBUG = os.getenv('FLASK_DEBUG')
 DB_DIR = os.path.dirname(os.path.abspath(__name__))
 APP_DIR = DB_DIR
 SRV_DIR = os.getenv('FLASK_FOLDER')
-# Debug включен только на локальном сервере, на боевом сервере немного другой путь
-if DEBUG == '0':
+if DEBUG == '0':    # Debug включен только на локальном сервере, на боевом сервере немного другой путь
     APP_DIR = os.path.join(APP_DIR, SRV_DIR)
+
+# Базы данных
+MONGO_CONN_STRING = f"mongodb+srv://{os.getenv('MONGO_USER')}:{os.getenv('MONGO_PASS')}" \
+                    f"@cluster0.f5t4t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 
 class Config:

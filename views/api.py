@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-from flask import jsonify
+from flask import jsonify, request
 
 from app import app, db
 from models import Birthday, Beget
 from services.telegram import TBot
+from utils.database import MongoDB
 from utils.decorators import token_required
 from utils.utils import get_date_integer
 
@@ -34,7 +35,7 @@ def birthday():
     if birthday_people:
         t.send_message(message=f'Сегодня свои дни рождения празднуют:\n {birthday_people}')
 
-    return jsonify({'status': 'success'})
+    return jsonify({'status': MongoDB().log_api_req_insert(request.url, 'success')})
 
 
 @app.route('/api/v1.0/get_beget_news', methods=['GET'])
@@ -57,7 +58,7 @@ def get_beget_news():
     for n in news_db_data:
         news_db_text.append(n.text)
 
-    # Проверяем наличие новый новостей
+    # Проверяем наличие новых новостей
     for n in news_in:
         if n not in news_db_text:
             news = Beget(text=n)
@@ -70,10 +71,10 @@ def get_beget_news():
                 t = TBot()
                 t.send_message(message=f'ℹ️Beget news:\n {n}')
 
-    return jsonify({'status': 'success'})
+    return jsonify({'status': MongoDB().log_api_req_insert(request.url, 'success')})
 
 
 @app.route('/api/v1.0/test_token', methods=['GET'])
 @token_required
 def get_test():
-    return jsonify({'status': 'success'})
+    return jsonify({'status': MongoDB().log_api_req_insert(request.url, 'success')})
