@@ -26,6 +26,7 @@ class Config:
 
 
 class Tokens:
+    FLASK_API_TOKEN = os.getenv('FLASK_API_TOKEN')
     TINKOFF_SECRET_KEY = os.getenv('TINKOFF_SECRET_KEY')
     BINANCE_API_KEY = os.getenv('BINANCE_API_KEY')
     BINANCE_API_SECRET = os.getenv('BINANCE_API_SECRET')

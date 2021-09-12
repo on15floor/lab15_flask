@@ -5,20 +5,12 @@ from flask import jsonify
 from app import app, db
 from models import Birthday, Beget
 from services.telegram import TBot
+from utils.decorators import token_required
 from utils.utils import get_date_integer
 
 
-def beget_news_pars() -> list:
-    response = requests.get("https://beget.com/ru/news/2021/beget-12-years")
-    soup = BeautifulSoup(response.text, 'html.parser')
-    news = soup.find_all("ul", {"class": "nav nav-category-tree flex-nowrap my-0"})
-    res = []
-    for n in news[0].contents:
-        res.append(n.text.strip())
-    return res
-
-
 @app.route('/api/v1.0/get_birthdays', methods=['GET'])
+@token_required
 def birthday():
     """ Отправка информации о сегодняшних именниках """
     date_today = get_date_integer()
@@ -46,8 +38,19 @@ def birthday():
 
 
 @app.route('/api/v1.0/get_beget_news', methods=['GET'])
+@token_required
 def get_beget_news():
     """ Проверка новостей beget.ru и отправка новых """
+
+    def beget_news_pars() -> list:
+        response = requests.get("https://beget.com/ru/news/2021/beget-12-years")
+        soup = BeautifulSoup(response.text, 'html.parser')
+        beget_news = soup.find_all("ul", {"class": "nav nav-category-tree flex-nowrap my-0"})
+        res = []
+        for n in beget_news[0].contents:
+            res.append(n.text.strip())
+        return res
+
     news_in = beget_news_pars()
     news_db_data = Beget.query.order_by(Beget.id).all()
     news_db_text = []
@@ -67,4 +70,10 @@ def get_beget_news():
                 t = TBot()
                 t.send_message(message=f'ℹ️Beget news:\n {n}')
 
+    return jsonify({'status': 'success'})
+
+
+@app.route('/api/v1.0/test_token', methods=['GET'])
+@token_required
+def get_test():
     return jsonify({'status': 'success'})
